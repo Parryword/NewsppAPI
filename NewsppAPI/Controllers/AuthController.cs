@@ -31,7 +31,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(UserDto request)
+    public async Task<ActionResult<TokenResponseDto>> Login(UserDto request)
     {
         var token = await authService.LoginAsync(request);
 
@@ -41,6 +41,18 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
         
         return Ok(token);
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto request)
+    {
+        var result = await authService.RefreshTokenAsync(request);
+        if (result == null)
+        {
+            return BadRequest("Invalid refresh token");       
+        }
+        
+        return Ok(result);
     }
     
     [Authorize]
