@@ -1,0 +1,7 @@
+﻿services:
+  newsppapi:
+    image: newsppapi
+    build:
+      context: .
+      dockerfile: NewsppAPI/Dockerfile
+
