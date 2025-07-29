@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -40,5 +41,19 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
         
         return Ok(token);
+    }
+    
+    [Authorize]
+    [HttpGet]
+    public IActionResult AuthenticatedOnlyEndpoint()
+    {
+        return Ok("You are authenticated");   
+    }
+    
+    [Authorize(Roles = "Admin")]
+    [HttpGet("admin")]
+    public IActionResult AdminOnlyEndpoint()
+    {
+        return Ok("You are an admin");   
     }
 }

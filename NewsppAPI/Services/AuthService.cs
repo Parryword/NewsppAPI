@@ -55,7 +55,8 @@ public class AuthService(UserDbContext context, IConfiguration configuration) : 
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, user.Username),
-            new(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Role, user.Role)
         };
 
         var key = new SymmetricSecurityKey(
